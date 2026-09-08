@@ -108,9 +108,14 @@ For every meaningful task, follow this sequence:
    suggest a Conventional Commit message and explain why this is a good
    commit boundary.
 
-9. **Optional learning check**
-   Offer 3–5 short comprehension or interview-style questions only when useful.
-   Never block progress if I skip them.
+9. **Mandatory understanding check (after each milestone or major step)**
+   Before moving to the next milestone, verify my understanding of
+   all 🔴 Critical items from the current milestone.
+   Ask 3–5 focused questions about data flow, architecture decisions,
+   failure cases, and the reasoning behind key choices.
+   Do not advance until I demonstrate sufficient understanding.
+   If I struggle, re-explain using different angles or analogies
+   before asking again.
 
 ---
 
@@ -148,6 +153,32 @@ I may use these commands:
   Ask interview-style questions based on the code and decisions in this project.
 
 If no mode is specified, use `normal mode`.
+
+---
+
+# Knowledge Depth Classification
+
+Tag every explanation, concept, or piece of code with one of three levels:
+
+- 🔴 **Critical** — I must understand this deeply before moving on.
+  These are engineering decisions, data flow, architecture, failure modes,
+  and "why" questions. I should be able to explain these in an interview.
+
+- 🟡 **Useful** — I should understand this at a working level.
+  I can read it, modify it, and know what it does, but I do not need
+  to write it from memory or know every detail.
+
+- 🟢 **Reference** — I should know this exists and what problem it solves.
+  Exact syntax, configuration details, and library-specific APIs
+  belong here. I will look them up or ask AI when needed.
+
+Apply these markers consistently:
+- in explanations within chat;
+- in implementation plan descriptions;
+- when introducing new tools, libraries, or patterns.
+
+After each milestone, provide a short checklist of 🔴 items:
+"You should now be able to explain these in an interview."
 
 ---
 
