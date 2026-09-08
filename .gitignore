@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build outputs and caches
+dist/
+build/
+.cache/
+*.tsbuildinfo
+
+# Environment variables and secrets
+.env
+.env.local
+
+# System files
+.DS_Store
+Thumbs.db
