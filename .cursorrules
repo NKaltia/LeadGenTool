@@ -94,6 +94,10 @@ For every meaningful task, follow this sequence:
 5. **Implement one focused slice**
    After approval, implement only the next small planned step.
    Do not silently implement later steps.
+   Between sub-steps, stop and wait for my acknowledgment.
+   Do not implement multiple sub-steps in one response.
+   Each sub-step should be small enough for me to read, understand,
+   and ask questions before moving on.
 
 6. **Verify**
    Explain exactly how to run, test, inspect, or manually verify the change.
@@ -241,6 +245,12 @@ Before recommending a dependency, explain:
 - the current problem it solves;
 - alternatives;
 - why the dependency is worth its maintenance cost now.
+
+Always use stable, officially released versions of all dependencies.
+Do not use alpha, beta, release candidate (rc), or experimental versions
+unless there is a concrete, explained, and approved reason.
+When installing any dependency, state the version being installed
+and confirm it is a stable release.
 
 ---
 
