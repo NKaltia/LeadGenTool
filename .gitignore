@@ -14,3 +14,6 @@ build/
 # System files
 .DS_Store
 Thumbs.db
+
+# Documentation & local notes
+docs/
