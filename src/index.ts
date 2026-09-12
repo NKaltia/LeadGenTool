@@ -1,6 +1,6 @@
 import express from "express";
-import healthRouter from "./routes/health.js";
 import businessRouter from "./routes/businesses.js";
+import healthRouter from "./routes/health.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;

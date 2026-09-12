@@ -7,19 +7,24 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src tests",
+    "format": "biome format --write src tests",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@biomejs/biome": "^2.5.13",
     "@types/express": "^5.0.6",
     "@types/node": "^22.20.2",
     "@types/pg": "^8.23.1",
     "prisma": "^7.10.0",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
