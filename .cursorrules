@@ -50,6 +50,17 @@ be used by a real small software-services business.
    Prefer simple, readable, maintainable solutions.
    Introduce complexity only when the current problem justifies it.
 
+6. Ask for hands-on attempts at the right moment, not on first contact.
+   You may ask me to write a piece of code, a plan, or a prediction myself,
+   but only when I have already seen at least one worked example of the same
+   kind of pattern and have real grounding to attempt it — not on my first
+   exposure to a completely unfamiliar concept. On a first encounter, teach
+   with a worked example first. Once a pattern is familiar, prefer asking me
+   to attempt a similar or extended case before showing the implementation.
+   A lightweight alternative to writing full code is asking me to predict an
+   outcome before you explain it (e.g. "what status code should this return,
+   and why?") — this still forces active thinking without blank-page dread.
+
 ---
 
 # Permission Protocol
@@ -120,6 +131,10 @@ For every meaningful task, follow this sequence:
    Do not advance until I demonstrate sufficient understanding.
    If I struggle, re-explain using different angles or analogies
    before asking again.
+   Understanding checks are not limited to this end-of-milestone moment —
+   ask a short, focused question on the spot whenever a 🔴 critical decision
+   or non-obvious behavior comes up, so understanding is verified while it is
+   fresh, not only in aggregate at the end.
 
 ---
 
@@ -246,6 +261,11 @@ Before recommending a dependency, explain:
 - alternatives;
 - why the dependency is worth its maintenance cost now.
 
+When a decision is architecturally significant (a new dependency, a
+structural choice with real alternatives — not a trivial pick), write a
+short ADR in `docs/decisions/` at the time the decision is made, using
+`docs/decisions/0000-template.md`. Do this immediately, not as cleanup later.
+
 Always use stable, officially released versions of all dependencies.
 Do not use alpha, beta, release candidate (rc), or experimental versions
 unless there is a concrete, explained, and approved reason.
@@ -261,7 +281,8 @@ and confirm it is a stable release.
 - Keep functions focused and reasonably small.
 - Validate external input at system boundaries.
 - Handle expected failures explicitly.
-- Use consistent error responses.
+- Use consistent error responses, enforced through a single centralized
+  Express error-handling middleware rather than repeated per-route logic.
 - Never expose secrets in code, logs, commits, or documentation.
 - Use environment variables for configuration and validate them at startup.
 - Prefer explicit, simple code over clever abstractions.
@@ -286,6 +307,8 @@ A task is generally complete when, where relevant:
 - invalid input and at least one realistic failure case are handled;
 - the change is manually verified or covered by an appropriate test;
 - types, linting, and tests pass;
+- once CI exists (from Milestone 2.5 onward), it is green on the Pull Request
+  — passing locally is not sufficient on its own;
 - documentation is updated if the setup, API, architecture, or behavior changed;
 - a sensible commit boundary is suggested.
 
@@ -295,6 +318,11 @@ Use engineering judgment and explain the chosen level of quality.
 ---
 
 # Git and Documentation
+
+Never commit directly to `main`. Work on a dedicated branch per milestone or
+feature (`feature/<short-name>`) and open a Pull Request to merge, even
+though the developer works solo — the PR is the review checkpoint and the
+place CI results are visible before merge.
 
 Use small, coherent commits.
 Suggest a commit only when the current change:
@@ -318,6 +346,19 @@ When appropriate, help me document:
 - architecture decisions and trade-offs;
 - known limitations;
 - how I can explain the feature in an interview.
+
+---
+
+# External Review Partner
+
+The developer also works with a separate AI mentor (Claude Code, outside
+Antigravity) for planning, deep explanations, and post-implementation code
+review. When the developer brings a plan or ADR that was already worked out
+with that mentor, treat it as agreed scope: implement it as specified rather
+than silently expanding, simplifying, or redesigning it. If the plan looks
+incomplete or you'd genuinely do something differently, say so explicitly and
+let the developer decide whether to bring it back for discussion — do not
+quietly diverge from an agreed plan.
 
 ---
 

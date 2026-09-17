@@ -4,6 +4,7 @@ import {
   createBusinessSchema,
   updateBusinessSchema,
 } from "../schemas/business.schema.js";
+import { checkWebsiteAvailability } from "../services/audit.service.js";
 
 const businessRouter = Router();
 
@@ -94,6 +95,48 @@ businessRouter.delete("/businesses/:id", async (req, res) => {
   });
 
   res.status(204).send();
+});
+
+// POST /businesses/:id/audits — perform website audit for a business
+businessRouter.post("/businesses/:id/audits", async (req, res) => {
+  const business = await db.business.findUnique({
+    where: { id: req.params.id },
+  });
+
+  if (!business) {
+    res.status(404).json({ error: "Business not found" });
+    return;
+  }
+
+  const auditResult = await checkWebsiteAvailability(business.websiteUrl);
+
+  const audit = await db.websiteAudit.create({
+    data: {
+      businessId: business.id,
+      ...auditResult,
+    },
+  });
+
+  res.status(201).json(audit);
+});
+
+// GET /businesses/:id/audits — get audit history for a business
+businessRouter.get("/businesses/:id/audits", async (req, res) => {
+  const business = await db.business.findUnique({
+    where: { id: req.params.id },
+  });
+
+  if (!business) {
+    res.status(404).json({ error: "Business not found" });
+    return;
+  }
+
+  const audits = await db.websiteAudit.findMany({
+    where: { businessId: req.params.id },
+    orderBy: { createdAt: "desc" },
+  });
+
+  res.json(audits);
 });
 
 export default businessRouter;
