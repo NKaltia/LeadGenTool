@@ -107,6 +107,26 @@ describe("safeUrl", () => {
       });
     });
 
+    it("should return UNSAFE_TARGET for obfuscated loopback notations", async () => {
+      // The URL parser normalizes all of these to 127.0.0.1 or 0.0.0.0 before we check them
+      const obfuscated = [
+        "http://2130706433/", // decimal
+        "http://0x7f.1/", // hex
+        "http://017700000001/", // octal
+        "http://127.1/", // shortened
+        "http://[::ffff:7f00:1]/", // IPv4-mapped IPv6
+        "http://0/", // unspecified address
+      ];
+
+      for (const url of obfuscated) {
+        const result = await validateSafeUrl(url);
+        expect(result, url).toMatchObject({
+          safe: false,
+          errorReason: "UNSAFE_TARGET",
+        });
+      }
+    });
+
     it("should reject hostname resolving to private IP address via DNS", async () => {
       const mockLookup: DnsLookupFn = async () => [
         { address: "192.168.1.50", family: 4 },
