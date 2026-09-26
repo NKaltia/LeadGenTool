@@ -191,6 +191,32 @@ describe("audit.service", () => {
       expect(fetchMock).toHaveBeenCalledTimes(6);
     });
 
+    it("should return TIMEOUT when the total audit deadline is exceeded", async () => {
+      // fetch that only ends when its signal aborts, like a server that never answers
+      vi.stubGlobal(
+        "fetch",
+        vi.fn().mockImplementation(
+          (_url: string, init: { signal: AbortSignal }) =>
+            new Promise((_, reject) => {
+              init.signal.addEventListener("abort", () =>
+                reject(init.signal.reason),
+              );
+            }),
+        ),
+      );
+
+      const startedAt = performance.now();
+      // per-request timeout is long (5s) but the total deadline is only 50ms
+      const result = await checkWebsiteAvailability(
+        "https://slow-site.com",
+        5000,
+        50,
+      );
+
+      expect(result.errorReason).toBe("TIMEOUT");
+      expect(performance.now() - startedAt).toBeLessThan(1000);
+    });
+
     it("should return TIMEOUT when fetch throws TimeoutError", async () => {
       const timeoutError = new Error(
         "The operation was aborted due to timeout",
