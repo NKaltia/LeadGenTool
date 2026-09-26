@@ -32,4 +32,6 @@ model WebsiteAudit {
   finalUrl       String?
   errorReason    String?
   createdAt      DateTime  @default(now())
+
+  @@index([businessId, createdAt])
 }
