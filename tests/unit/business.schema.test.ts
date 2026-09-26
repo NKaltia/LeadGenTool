@@ -67,6 +67,22 @@ describe("business.schema", () => {
         expect(errors.websiteUrl).toContain("Invalid URL format");
       }
     });
+
+    it("should reject non-http(s) website URLs", () => {
+      for (const websiteUrl of [
+        "ftp://files.example.com",
+        "javascript:alert(1)",
+        "file:///etc/passwd",
+      ]) {
+        const result = createBusinessSchema.safeParse({
+          name: "Acme Services",
+          city: "Berlin",
+          websiteUrl,
+        });
+
+        expect(result.success).toBe(false);
+      }
+    });
   });
 
   describe("updateBusinessSchema", () => {

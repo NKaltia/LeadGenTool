@@ -5,7 +5,9 @@ export const createBusinessSchema = z.object({
   category: z.string().max(100).optional(),
   city: z.string().min(1, "City is required").max(100),
   phone: z.string().max(50).optional(),
-  websiteUrl: z.string().url("Invalid URL format").optional(),
+  websiteUrl: z
+    .url({ protocol: /^https?$/, error: "Invalid URL format" })
+    .optional(),
 });
 
 export const updateBusinessSchema = createBusinessSchema.partial();
